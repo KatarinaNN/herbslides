@@ -1,24 +1,44 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { data } from './data';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const [herb, setHerb] = useState(0);
+  const {id, image, name, description} = data[herb];
+
+  const previousHerb = () =>{
+    setHerb((herb =>{
+      herb--;
+      if(herb<0) {
+        herb =data.length-1;
+      }
+      return herb;
+    }))
+  }
+  const nextHerb = () =>{
+    setHerb((herb =>{
+      herb++;
+      if(herb>data.length-1){
+        herb=0;
+      }
+      return herb;
+    }))
+  }
+  return (<div>
+            <div className="container">
+          <h1>{id}. {name}</h1>
+        </div>
+          <div className="container">
+          <img src={image} alt="herb" width="500px" />
+        </div> 
+        <div className="container">
+          <p>{description}</p>
+        </div>
+        <div className="container btn">
+          <button onClick={previousHerb}>previous</button>
+          <button onClick={nextHerb}>next</button>
+        </div>
+  </div>
   );
 }
 
